@@ -33,6 +33,30 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Update Inventory') {
+            steps {
+                script {
+                    // Actualizar la IP en el archivo host.ini
+                    try {
+                        sh '''
+                        echo "[web]" > ${WORKSPACE}/ansible/inventories/${BRANCH_NAME}/host.ini
+                        echo "172.17.50.119 ansible_ssh_user=ubuntu" >> ${WORKSPACE}/ansible/inventories/${BRANCH_NAME}/host.ini
+                        '''
+                        echo 'Inventory updated successfully'
+                    } catch (Exception e) {
+                        error "Failed to update inventory: ${e}"
+                    }
+                }
+            }
+        }
+        stage('Verify Inventory') {
+            steps {
+                script {
+                    // Verificar el contenido del archivo host.ini
+                    sh 'cat ${WORKSPACE}/ansible/inventories/${BRANCH_NAME}/host.ini'
+                }
+            }
+        }
         stage('Copy Files') {
             steps {
                 script {
