@@ -27,12 +27,12 @@ pipeline {
             steps {
                 script {
                     // Crear directorios en el agente remoto
-                    sh 'mkdir -p ~/ansible/inventories/dev'
+                    sh 'mkdir -p /home/jenkins/ansible/inventories/dev'
                     sh 'mkdir -p ~/ansible/inventories/staging'
                     sh 'mkdir -p ~/ansible/inventories/main'
                     sh 'mkdir -p ~/ansible/playbook'
                     // Copiar los archivos necesarios al agente remoto
-                    sh 'cp ${WORKSPACE}/ansible/inventories/dev/host.ini ~/ansible/inventories/dev/'
+                    sh 'cp ${WORKSPACE}/ansible/inventories/dev/host.ini /home/jenkins/ansible/inventories/dev/'
                     sh 'cp ${WORKSPACE}/ansible/inventories/staging/host.ini ~/ansible/inventories/staging/'
                     sh 'cp ${WORKSPACE}/ansible/inventories/main/host.ini ~/ansible/inventories/main/'
                     sh 'cp ${WORKSPACE}/ansible/playbook/playbook.yml ~/ansible/playbook/'
